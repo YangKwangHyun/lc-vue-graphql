@@ -27,6 +27,11 @@ const apolloClient = new ApolloClient({
 
 const apolloProvider = createApolloProvider({
     defaultClient: apolloClient,
+    defaultOptions: {
+        $query: {
+            fetchPolicy: 'cache-and-network',
+        },
+    }
 })
 
 createApp(App).use(router).use(apolloProvider).use(VueApolloComponents).mount('#app')

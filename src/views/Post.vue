@@ -18,6 +18,15 @@
     </div>
 
     <div>
+      <router-link :to="{ name: 'Update', params: { id: $route.params.id }}">
+        Update
+      </router-link>
+      <button @click="deletePost">
+        Delete Post
+      </button>
+    </div>
+
+    <div>
       <h2>Apollo Query Component</h2>
       <ApolloQuery
           :query="gql => gql`
@@ -60,6 +69,11 @@ import gql from 'graphql-tag'
 
 export default {
   name: 'Post',
+  data() {
+    return {
+      loading: false,
+    }
+  },
   apollo: {
     // Simple query that will update the 'hello' vue property
     post: {
@@ -78,5 +92,32 @@ export default {
       }
     }
   },
+  methods: {
+    deletePost() {
+      this.loading = true;
+
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation deletePost($id: ID!){
+            deletePost(id: $id){
+              id
+              title
+            }
+          }
+        `,
+        variables: {
+          id: this.$route.params.id,
+        },
+      }).then(data => {
+        console.log(data)
+        this.loading = false;
+        this.$router.push({ name: 'Home' })
+      }).catch(error => {
+        console.log(error.graphQLErrors)
+        this.loading = false;
+        // this.error = error.graphQLErrors[0].message;
+      })
+    }
+  }
 }
 </script>
