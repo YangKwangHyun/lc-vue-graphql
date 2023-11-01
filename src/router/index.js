@@ -7,6 +7,7 @@ import Update from "@/views/Update.vue";
 import Login from "@/views/Login.vue";
 import Me from "@/views/Me.vue";
 import Register from "@/views/Register.vue";
+import Admin from "@/views/Admin.vue";
 
 const routes = [
     {
@@ -48,6 +49,11 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        component: Admin
     }
 
 ];
